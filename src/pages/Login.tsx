@@ -3,7 +3,7 @@ import validator from 'validator';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { InputType } from '../types';
-import { actionCreator } from '../redux/actions';
+import { actionCreatorEmail } from '../redux/actions';
 
 function Login() {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ function Login() {
 
   const handleClick = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(actionCreator(inputValue.email));
+    dispatch(actionCreatorEmail(inputValue.email));
     navigate('/carteira');
   };
 
