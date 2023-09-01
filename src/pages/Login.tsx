@@ -41,12 +41,14 @@ function Login() {
         data-testid="email-input"
         name="email"
         onChange={ handleChange }
+        placeholder="Email"
       />
       <input
         type="password"
         name="password"
         onChange={ handleChange }
         data-testid="password-input"
+        placeholder="Senha"
       />
       <button disabled={ isDisabeled } type="submit">Entrar</button>
     </form>
