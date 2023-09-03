@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { ADD_EXPENSE, ADD_WALLET } from '../actions';
+import { ADD_EXPENSE, ADD_WALLET, REMOVE_EXPENSE } from '../actions';
 
 const INITIAL_WALLET_STATE = {
   currencies: [], // array de string
@@ -21,6 +21,12 @@ const wallet = (state = INITIAL_WALLET_STATE, action: AnyAction) => {
       return {
         ...state,
         expenses: [...state.expenses, action.payload],
+      };
+    }
+    case REMOVE_EXPENSE: {
+      return {
+        ...state,
+        expenses: action.payload,
       };
     }
     default: {
