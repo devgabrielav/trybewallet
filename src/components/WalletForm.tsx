@@ -14,8 +14,8 @@ function WalletForm() {
     id: 0,
     value: '',
     currency: 'USD',
-    method: '',
-    tag: '',
+    method: 'Dinheiro',
+    tag: 'Alimentação',
     description: '',
   });
 
