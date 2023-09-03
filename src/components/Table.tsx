@@ -1,15 +1,11 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import './Table.css';
-import { ExpenseTypeCurr, GlobalStateType } from '../types';
+import { GlobalStateType } from '../types';
 import { deleteExpense } from '../redux/actions';
 
 function Table() {
   const { expenses } = useSelector((globalState: GlobalStateType) => globalState.wallet);
-
-  const deleteEx = (id: number, expenseS: ExpenseTypeCurr[]) => {
-    console.log('clicou');
-    deleteExpense(id, expenseS);
-  };
+  const dispatch = useDispatch();
 
   return (
     <table
@@ -46,9 +42,11 @@ function Table() {
             * Number(expense.exchangeRates[expense.currency].ask)).toFixed(2)}
             </td>
             <td className="expenseBorder">Real</td>
-            <td><button>Editar</button></td>
             <td>
-              <button onClick={ () => deleteEx(expense.id, expenses) }>
+              <button
+                onClick={ () => dispatch(deleteExpense(expense.id, expenses)) }
+                data-testid="delete-btn"
+              >
                 Excluir
               </button>
             </td>
