@@ -1,5 +1,8 @@
 import { AnyAction } from 'redux';
-import { ADD_EXPENSE, ADD_WALLET, REMOVE_EXPENSE } from '../actions';
+import {
+  ADD_EXPENSE, ADD_WALLET, BUTTON_EDIT, REMOVE_EXPENSE, FIND_EXPENSE, SAVE_EDIT,
+} from '../actions';
+import { ExpenseTypeCurr } from '../../types';
 
 const INITIAL_WALLET_STATE = {
   currencies: [], // array de string
@@ -27,6 +30,32 @@ const wallet = (state = INITIAL_WALLET_STATE, action: AnyAction) => {
       return {
         ...state,
         expenses: action.payload,
+      };
+    }
+    case BUTTON_EDIT: {
+      return {
+        ...state,
+        editor: action.payload,
+      };
+    }
+    case FIND_EXPENSE: {
+      return {
+        ...state,
+        idToEdit: action.payload,
+      };
+    }
+    case SAVE_EDIT: {
+      return {
+        ...state,
+        expenses: state.expenses
+          .map((expense: ExpenseTypeCurr) => (expense.id === action.payload.id ? {
+            ...expense,
+            value: action.payload.value,
+            currency: action.payload.currency,
+            method: action.payload.method,
+            tag: action.payload.tag,
+            description: action.payload.description,
+          } : expense)),
       };
     }
     default: {

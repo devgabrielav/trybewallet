@@ -9,6 +9,9 @@ export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 export const REQUEST_COIN = 'REQUEST_COIN';
 export const ADD_TOTAL = 'ADD_TOTAL';
 export const UPDATE_TOTAL = 'UPDATE_TOTAL';
+export const BUTTON_EDIT = 'BUTTON_EDIT';
+export const FIND_EXPENSE = 'FIND_EXPENSE';
+export const SAVE_EDIT = 'SAVE_EDIT';
 
 export const actionCreatorEmail = (email = '') => ({
   type: ADD_EMAIL,
@@ -22,10 +25,27 @@ export function requestStarted() {
   };
 }
 
+export const edit = (editor: boolean) => ({
+  type: BUTTON_EDIT,
+  payload: editor !== true,
+});
+
 export const actionTotal = (value: number) => {
   return {
     type: ADD_TOTAL,
     payload: value,
+  };
+};
+
+export const changeId = (id: number) => ({
+  type: FIND_EXPENSE,
+  payload: id,
+});
+
+export const saveEdit = (expense: ExpenseTypeCurr) => {
+  return {
+    type: SAVE_EDIT,
+    payload: expense,
   };
 };
 

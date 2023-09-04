@@ -1,11 +1,18 @@
 import { useSelector, useDispatch } from 'react-redux';
 import './Table.css';
 import { GlobalStateType } from '../types';
-import { deleteExpense } from '../redux/actions';
+import { deleteExpense, edit, changeId } from '../redux/actions';
 
 function Table() {
-  const { expenses } = useSelector((globalState: GlobalStateType) => globalState.wallet);
+  const { expenses, editor } = useSelector(
+    (globalState: GlobalStateType) => globalState.wallet,
+  );
   const dispatch = useDispatch();
+
+  const editFunction = (id : number) => {
+    dispatch(changeId(id));
+    dispatch(edit(editor));
+  };
 
   return (
     <table
@@ -43,6 +50,9 @@ function Table() {
             </td>
             <td className="expenseBorder">Real</td>
             <td>
+              <button data-testid="edit-btn" onClick={ () => editFunction(expense.id) }>
+                Editar
+              </button>
               <button
                 onClick={ () => dispatch(deleteExpense(expense.id, expenses)) }
                 data-testid="delete-btn"
