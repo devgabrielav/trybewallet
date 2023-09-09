@@ -30,13 +30,6 @@ export const edit = (editor: boolean) => ({
   payload: editor !== true,
 });
 
-export const actionTotal = (value: number) => {
-  return {
-    type: ADD_TOTAL,
-    payload: value,
-  };
-};
-
 export const changeId = (id: number) => ({
   type: FIND_EXPENSE,
   payload: id,
@@ -75,7 +68,7 @@ export function fetchCurrencies() {
       const stringArray : string[] = Object.keys(rest);
       dispatch(actionCreatorWallet(stringArray));
     } catch (error: any) {
-      console.log(error);
+      return error;
     }
   };
 }

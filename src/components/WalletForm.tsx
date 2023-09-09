@@ -4,13 +4,18 @@ import {
   CoinType, Dispatch, ExpenseType, ExpenseTypeCurr, GlobalStateType } from '../types';
 import { addNewExpense, fetchCurrencies, edit, saveEdit } from '../redux/actions';
 
+export const fetchCoins = async () => {
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const fetchedCoin: CoinType[] = await response.json();
+  return fetchedCoin;
+};
+
 function WalletForm() {
   const { expenses, editor, idToEdit } = useSelector((globalState: GlobalStateType) => (
     globalState.wallet));
   const { currencies } = useSelector((globalState: GlobalStateType) => (
     globalState.wallet
   ));
-  const [isLoading, setIsLoading] = useState(false);
   const initialValue = {
     id: 0,
     value: '',
@@ -36,24 +41,26 @@ function WalletForm() {
   const saveChanges = () => {
     dispatch(saveEdit(expensesInfo as ExpenseTypeCurr));
     dispatch(edit(editor));
+    setExpensesInfo({
+      ...expensesInfo,
+      value: '',
+      description: '',
+    });
   };
 
   const dispatch: Dispatch = useDispatch();
 
   useEffect(() => {
-    setIsLoading(true);
     dispatch(fetchCurrencies());
-    setIsLoading(false);
   }, [dispatch]);
 
   const submitExpense = async () => {
-    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const fetchedCoin: CoinType[] = await response.json();
     const lastIndex = expenses.length - 1;
+    const coins = await fetchCoins();
     const results = {
       ...expensesInfo,
       id: expenses.length === 0 ? 0 : lastIndex + 1,
-      exchangeRates: fetchedCoin,
+      exchangeRates: coins,
     };
     dispatch(addNewExpense(results));
     setExpensesInfo({
@@ -74,26 +81,22 @@ function WalletForm() {
     });
   };
 
-  if (isLoading) {
-    return (
-      <h1>Carregando...</h1>
-    );
-  }
-
   return (
-    <form onSubmit={ (e) => e.preventDefault() }>
+    <form onSubmit={ (event) => event.preventDefault() }>
       <input
         type="number"
         data-testid="value-input"
         name="value"
         onChange={ handleChange }
         value={ expensesInfo.value }
+        placeholder="Digite um valor"
       />
       <textarea
         name="description"
         data-testid="description-input"
         onChange={ handleChange }
         value={ expensesInfo.description }
+        placeholder="Digite a descrição"
       />
       <select data-testid="currency-input" name="currency" onChange={ handleChange }>
         { currencies.map((currency) => (

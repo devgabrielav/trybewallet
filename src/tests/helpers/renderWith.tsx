@@ -1,10 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { applyMiddleware, legacy_createStore as createStore, Store } from 'redux';
 import { render } from '@testing-library/react';
 import thunk from 'redux-thunk';
+import userEvent from '@testing-library/user-event';
 import rootReducer from '../../redux/reducers';
+import { GlobalStateType } from '../../types';
 
 type Options = {
   initialEntries?: string[];
@@ -50,12 +52,20 @@ export function renderWithRedux(component: React.ReactElement, options: Options 
 }
 
 export function renderWithRouterAndRedux(
-  component: React.ReactElement,
-  options: Options = {},
+  component: JSX.Element,
+  route: string = '/',
+  state: GlobalStateType | undefined = undefined,
+  store = createStore(rootReducer, state as undefined, applyMiddleware(thunk)),
 ) {
-  const {
-    initialEntries = ['/'],
-  } = options;
+  window.history.pushState({}, 'Test page', route);
 
-  return renderWithRedux(withRouter(component, initialEntries), options);
+  return {
+    ...render(
+      <BrowserRouter>
+        <Provider store={ store }>{component}</Provider>
+      </BrowserRouter>,
+    ),
+    user: userEvent.setup(),
+    store,
+  };
 }
