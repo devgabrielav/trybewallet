@@ -1,10 +1,34 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+# Project Wallet Management
+
+# Context
+This is a Frontend project.
+
+In this project, the objective is to develop a spending control wallet with a currency converter. By using this application, the user is able to:
+
+- Add, remove and edit an expense.
+- View your expense table.
+- View total expenses converted to a currency of your choice.
+
+## Used technologies
+
+Front-end:
+> Developed using: Typescript, Vite, React, Validator, React Router DOM and Redux.
+- ESLint was also used for cleaner code.
+
+Fetched API:
+> Economia Awesome API.
+
+## Installing Dependencies
+
+> After cloning the project
+
+```bash
+cd wallet-management
+npm install
+```
+
+## Running the application
+    
+  ```
+  npm run dev
+  ```
