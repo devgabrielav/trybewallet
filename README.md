@@ -15,7 +15,7 @@ Front-end:
 > Developed using: Typescript, Vite, React, Validator, React Router DOM and Redux.
 - ESLint was also used for cleaner code.
 
-Fetched API:
+Fetched API (Coin converter):
 > Economia Awesome API.
 
 ## Installing Dependencies
